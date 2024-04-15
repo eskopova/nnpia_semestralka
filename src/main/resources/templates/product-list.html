@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>nnpia semestralka</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<h2>Produkty</h2>
+<section>
+
+    <div th:each="product : ${productList}">
+        <h3 th:text="${product.productName}"></h3>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>nnpia semestralka</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<h2>Produkty</h2>
+<section>
+
+    <form action="#" th:action="@{product-form-process}" th:object="${product}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <input type="text" th:field="*{productName}" />
+        <input type="submit" />
+    </form>
+
+</section>
+</body>
+</html>
