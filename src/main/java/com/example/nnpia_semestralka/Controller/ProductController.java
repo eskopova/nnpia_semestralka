@@ -22,6 +22,12 @@ public class ProductController {
         return "product-list";
     }
 
+    @GetMapping("/product-detail/{id}")
+    public String showProductDetail(@PathVariable(required = false) Long id, Model model) {
+        model.addAttribute("product", productRepository.findById(id).get());
+        return "product-detail";
+    }
+
     @GetMapping(value = {"/product-form", "/product-form/{id}"})
     public String addOrEditProduct(@PathVariable(required = false) Long id, Model model) {
         if (id != null) {
