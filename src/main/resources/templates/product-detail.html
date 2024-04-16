@@ -10,6 +10,8 @@
 <section>
 
     <h3 th:text="${product.productName}"></h3>
+    <a th:href="@{'/shopping-cart-remove/' + ${product.getId()}}">-</a>
+    <a th:href="@{'/shopping-cart-add/' + ${product.getId()}}">+</a>
 
 </section>
 </body>

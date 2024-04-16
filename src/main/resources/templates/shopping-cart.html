@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>nnpia semestralka</title>
+    <link th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<h2>Nakupni kosik</h2>
+<section>
+
+    <div th:each="item : ${shoppingCart.entrySet()}">
+        <h3 th:text="${item.getKey().getProductName()}"></h3>
+        <span th:text="${item.getValue()}"></span>
+        <a th:href="@{'/shopping-cart-remove/' + ${item.getKey().getId()}}">-</a>
+        <a th:href="@{'/shopping-cart-add/' + ${item.getKey().getId()}}">+</a>
+    </div>
+
+</section>
+</body>
+</html>

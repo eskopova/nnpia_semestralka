@@ -10,7 +10,7 @@
 <section>
 
     <div th:each="product : ${productList}">
-        <h3 th:text="${product.productName}"></h3>
+        <a th:href="@{'/product-detail/' + ${product.getId()}}"><h3 th:text="${product.productName}"></h3></a>
     </div>
 
 </section>
