@@ -38,14 +38,18 @@ public class ProductController {
     public String addOrEditProduct(@PathVariable(required = false) Long id, Model model) {
         if (id != null) {
             Product product = productRepository.findById(id).orElse(new Product());
-            model.addAttribute("product", product);
+            AddOrEditProductDto addOrEditProductDto = new AddOrEditProductDto();
+            addOrEditProductDto.setProductName(product.getProductName());
+            addOrEditProductDto.setId(product.getId());
+
+            model.addAttribute("product", addOrEditProductDto);
         } else {
             model.addAttribute("product", new AddOrEditProductDto());
         }
         return "product-form";
     }
 
-    @PostMapping("product-form-process")
+    @PostMapping("/product-form-process")
     public String addOrEditProductProcess(AddOrEditProductDto addOrEditProductDto) {
         Product product = new Product();
         product.setId(addOrEditProductDto.getId());

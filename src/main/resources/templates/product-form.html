@@ -9,7 +9,7 @@
 <h2>Produkty</h2>
 <section>
 
-    <form action="#" th:action="@{product-form-process}" th:object="${product}" method="post">
+    <form action="#" th:action="@{/product-form-process}" th:object="${product}" method="post">
         <input type="hidden" th:field="*{id}" />
         <input type="text" th:field="*{productName}" />
         <input type="submit" />

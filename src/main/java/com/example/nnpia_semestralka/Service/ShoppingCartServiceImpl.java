@@ -1,6 +1,11 @@
 package com.example.nnpia_semestralka.Service;
 
+import com.example.nnpia_semestralka.Entity.Order;
+import com.example.nnpia_semestralka.Entity.OrderItem;
 import com.example.nnpia_semestralka.Entity.Product;
+import com.example.nnpia_semestralka.Entity.StateEnum;
+import com.example.nnpia_semestralka.Repository.ItemRepository;
+import com.example.nnpia_semestralka.Repository.OrderRepository;
 import com.example.nnpia_semestralka.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -16,9 +21,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final Map<Product, Integer> cart;
 
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
 
-    public ShoppingCartServiceImpl(ProductRepository productRepository) {
+    public ShoppingCartServiceImpl(ProductRepository productRepository, OrderRepository orderRepository, ItemRepository itemRepository) {
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
+        this.itemRepository = itemRepository;
         this.cart = new HashMap<>();
     }
 
@@ -49,5 +58,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public Map<Product, Integer> getCart() {
         return cart;
+    }
+
+    @Override
+    public void checkout() {
+        Order order = new Order();
+        order.setState(StateEnum.NEW);
+
+        orderRepository.save(order);
+
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(entry.getKey());
+            orderItem.setAmount(entry.getValue());
+
+            itemRepository.save(orderItem);
+        }
+
+        cart.clear();
     }
 }
