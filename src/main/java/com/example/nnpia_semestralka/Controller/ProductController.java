@@ -3,6 +3,7 @@ package com.example.nnpia_semestralka.Controller;
 import com.example.nnpia_semestralka.Dto.AddOrEditProductDto;
 import com.example.nnpia_semestralka.Entity.Product;
 import com.example.nnpia_semestralka.Repository.ProductRepository;
+import com.example.nnpia_semestralka.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private FileService fileService;
 
     @ExceptionHandler(RuntimeException.class)
     public String handleException() {
@@ -41,6 +46,7 @@ public class ProductController {
             AddOrEditProductDto addOrEditProductDto = new AddOrEditProductDto();
             addOrEditProductDto.setProductName(product.getProductName());
             addOrEditProductDto.setId(product.getId());
+            addOrEditProductDto.setDescription(product.getDescription());
 
             model.addAttribute("product", addOrEditProductDto);
         } else {
@@ -54,6 +60,9 @@ public class ProductController {
         Product product = new Product();
         product.setId(addOrEditProductDto.getId());
         product.setProductName(addOrEditProductDto.getProductName());
+        product.setDescription(addOrEditProductDto.getDescription());
+
+        product.setPathToImage(fileService.upload(addOrEditProductDto.getImage()));
 
         productRepository.save(product);
         return "redirect:/";

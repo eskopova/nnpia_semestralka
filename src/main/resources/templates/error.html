@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>nnpia semestralka</title>
-    <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
+<head th:replace="fragments/head :: html_head"></head>
 <body>
 <h2>Chyba</h2>
+<div th:replace="fragments/navigation :: navigation_bar"></div>
 <section>
 
     <h3>Jejda, neco se nepovedlo!</h3>

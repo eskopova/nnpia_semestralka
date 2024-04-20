@@ -19,6 +19,12 @@ public class Product {
     @Column(name = "product_name")
     private String productName;
 
+    @Column(columnDefinition = "text")
+    private String description;
+
+    @Column
+    private String pathToImage;
+
     @OneToMany(mappedBy = "product")
     private Set<OrderItem> productsInOrders;
 

@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>nnpia semestralka</title>
-    <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
+<head th:replace="fragments/head :: html_head"></head>
 <body>
 <h2>Nakupni kosik</h2>
+<div th:replace="fragments/navigation :: navigation_bar"></div>
 <section>
 
-    <div th:each="item : ${shoppingCart.entrySet()}">
+    <div  class="product-list" th:each="item : ${shoppingCart.entrySet()}">
         <h3 th:text="${item.getKey().getProductName()}"></h3>
-        <span th:text="${item.getValue()}"></span>
-        <a th:href="@{'/shopping-cart-remove/' + ${item.getKey().getId()}}">-</a>
-        <a th:href="@{'/shopping-cart-add/' + ${item.getKey().getId()}}">+</a>
-    </div>
-
-    <div>
-        <a th:href="@{'/'}">Katalog produktů</a>
+        <span class="item-amount" th:text="${item.getValue()}"></span>
+        <a class="add-to-cart-button" th:href="@{'/shopping-cart-remove/' + ${item.getKey().getId()}}">-</a>
+        <a class="add-to-cart-button" th:href="@{'/shopping-cart-add/' + ${item.getKey().getId()}}">+</a>
     </div>
 
 </section>
 <section>
-    <a th:href="@{'/checkout'}">Potvrdit objednávku</a>
+    <a th:if="${shoppingCart.entrySet().size()} > 0" th:href="@{'/checkout'}">Potvrdit objednávku</a>
 </section>
 </body>
 </html>

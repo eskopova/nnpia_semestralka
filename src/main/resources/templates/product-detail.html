@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>nnpia semestralka</title>
-    <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
+<head th:replace="fragments/head :: html_head"></head>
 <body>
 <h2>Detail Produktu</h2>
+<div th:replace="fragments/navigation :: navigation_bar"></div>
 <section>
 
+    <img th:if="${product.pathToImage} != null" th:src="@{/images/{path} (path=${product.pathToImage})}" width="300">
     <h3 th:text="${product.productName}"></h3>
-    <a th:href="@{'/shopping-cart-remove/' + ${product.getId()}}">-</a>
-    <a th:href="@{'/shopping-cart-add/' + ${product.getId()}}">+</a>
+    <p th:text="${product.description}"></p>
+    <div class="product-list">
+        <a class="add-to-cart-button" th:href="@{'/shopping-cart-remove/' + ${product.getId()}}">-</a>
+        <a class="add-to-cart-button" th:href="@{'/shopping-cart-add/' + ${product.getId()}}">+</a>
+    </div>
 
 </section>
 </body>

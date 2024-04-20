@@ -12,3 +12,32 @@ strong {
 p {
     font-family: sans-serif;
 }
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    min-width: 200px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid gray;
+    text-decoration: none;
+}
+
+.item-amount {
+    padding: 10px;
+    background-color: white;
+    display: block;
+    border: 1px solid lightsteelblue;
+    text-decoration: none;
+}
+
+.add-to-cart-button {
+    padding: 10px;
+    background-color: lightsteelblue;
+    display: block;
+    border: 1px solid white;
+    text-decoration: none;
+}

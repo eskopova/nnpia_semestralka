@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>nnpia semestralka</title>
-    <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
+<head th:replace="fragments/head :: html_head"></head>
 <body>
 <h2>Produkty</h2>
-<section>
+<div th:replace="fragments/navigation :: navigation_bar"></div>
+<section class="product-list">
 
-    <div th:each="product : ${productList}">
+    <div class="product" th:each="product : ${productList}">
         <a th:href="@{'/product-detail/' + ${product.getId()}}"><h3 th:text="${product.productName}"></h3></a>
     </div>
 
