@@ -9,5 +9,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findProductByProductNameContains(String contains);
 
-    List<Product> findProductsByIdBetween(Long start, Long end);
+    List<Product> findByShop(String shop);
 }

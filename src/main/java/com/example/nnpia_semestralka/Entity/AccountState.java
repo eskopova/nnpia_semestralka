@@ -1,7 +1,7 @@
 package com.example.nnpia_semestralka.Entity;
 
-public enum StateEnum {
+public enum AccountState {
     NEW,
-    PAID,
-    DELIVERED
+    VERIFIED,
+    BANNED
 }

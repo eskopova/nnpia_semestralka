@@ -16,17 +16,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_name")
+    @Column
     private String productName;
-
-    @Column(columnDefinition = "text")
-    private String description;
 
     @Column
     private String pathToImage;
 
-    @OneToMany(mappedBy = "product")
-    private Set<OrderItem> productsInOrders;
+    @Column
+    private String description;
+
+    @Column
+    private String shop;
+
+    /*@OneToMany(mappedBy = "product")
+    private Set<Review> productReviews;*/
 
     @Override
     public boolean equals(Object o) {

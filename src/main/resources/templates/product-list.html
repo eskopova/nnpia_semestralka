@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: html_head"></head>
+<head th:replace="~{fragments/head :: html_head}"></head>
 <body>
 <h2>Produkty</h2>
-<div th:replace="fragments/navigation :: navigation_bar"></div>
+<div th:replace="~{fragments/navigation :: navigation_bar}"></div>
 <section class="product-list">
 
     <div class="product" th:each="product : ${productList}">

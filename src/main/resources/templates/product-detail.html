@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: html_head"></head>
+<head th:replace="~{fragments/head :: html_head}"></head>
 <body>
 <h2>Detail Produktu</h2>
-<div th:replace="fragments/navigation :: navigation_bar"></div>
+<div th:replace="~{fragments/navigation :: navigation_bar}"></div>
 <section>
 
     <img th:if="${product.pathToImage} != null" th:src="@{/images/{path} (path=${product.pathToImage})}" width="300">

@@ -4,20 +4,29 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.security.Timestamp;
+
 @Data
 @NoArgsConstructor
 @Entity
-public class OrderItem {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Order order;
+    /*@ManyToOne
+    private User user;
 
     @ManyToOne
-    private Product product;
+    private Product product;*/
 
-    private Integer amount;
+    @Column
+    private Integer rating;
+
+    @Column
+    private String comment;
+
+    @Column
+    private Timestamp reviewDate;
 }

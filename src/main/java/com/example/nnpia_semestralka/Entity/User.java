@@ -8,16 +8,16 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@Entity(name = "eshop_order")
-public class Order {
+@Entity(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private StateEnum state;
+    private AccountState state;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderItems;
+    /*@OneToMany(mappedBy = "user")
+    private Set<Review> reviews;*/
 }

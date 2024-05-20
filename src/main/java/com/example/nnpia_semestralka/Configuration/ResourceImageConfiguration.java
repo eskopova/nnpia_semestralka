@@ -13,5 +13,8 @@ public class ResourceImageConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("file:" + System.getProperty("user.dir") + "\\images\\");
+
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\static\\");
     }
 }

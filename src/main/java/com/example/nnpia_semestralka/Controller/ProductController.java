@@ -1,33 +1,78 @@
 package com.example.nnpia_semestralka.Controller;
 
-import com.example.nnpia_semestralka.Dto.AddOrEditProductDto;
+import com.example.nnpia_semestralka.Dto.ProductDto;
 import com.example.nnpia_semestralka.Entity.Product;
-import com.example.nnpia_semestralka.Repository.ProductRepository;
+import com.example.nnpia_semestralka.Service.ConversionService;
 import com.example.nnpia_semestralka.Service.FileService;
+import com.example.nnpia_semestralka.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.example.nnpia_semestralka.Service.ConversionService.toProductDto;
+import static com.example.nnpia_semestralka.Service.ConversionService.toProduct;
+
+@RestController
+@CrossOrigin
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private final ProductService productService;
 
     @Autowired
-    private FileService fileService;
+    private final FileService fileService;
 
-    @ExceptionHandler(RuntimeException.class)
+    public ProductController(ProductService productService, FileService fileService) {
+        this.productService = productService;
+        this.fileService = fileService;
+    }
+
+    /*@ExceptionHandler(RuntimeException.class)
     public String handleException() {
         return "error";
     }
 
-    @GetMapping("/")
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Object> handleNotFound(NotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }*/
+
+    @GetMapping("/products")
+    public List<ProductDto> getAllProducts() {
+        return productService.findAll()
+                .stream()
+                .map(ConversionService::toProductDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/products/{id}")
+    public ProductDto getProductById(@PathVariable Long id) {
+        Product byId = productService.findById(id);
+
+        return toProductDto(byId);
+    }
+
+    @PostMapping("/products")
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+        Product product = toProduct(productDto);
+        return toProductDto(productService.save(product));
+    }
+
+    @PutMapping("/products/{id}")
+    public ProductDto updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        Product product = toProduct(productDto);
+
+        return toProductDto(productService.update(id, product));
+    }
+
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
+    }
+
+    /*@GetMapping("/")
     public String showProducts(Model model) {
         model.addAttribute("productList", productRepository.findAll());
         return "product-list";
@@ -66,5 +111,5 @@ public class ProductController {
 
         productRepository.save(product);
         return "redirect:/";
-    }
+    }*/
 }

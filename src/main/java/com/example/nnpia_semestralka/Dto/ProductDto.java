@@ -1,10 +1,9 @@
 package com.example.nnpia_semestralka.Dto;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class AddOrEditProductDto {
+public class ProductDto {
 
     private Long id;
 
@@ -12,5 +11,8 @@ public class AddOrEditProductDto {
 
     private String description;
 
-    private MultipartFile image;
+    //private MultipartFile image;
+    private String pathToImage;
+
+    private String shop;
 }
