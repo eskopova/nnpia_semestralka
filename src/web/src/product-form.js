@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
+import "./styles/form.css";
 
-function ProductForm(props) {
+function ProductForm() {
 
     const maxDescriptionLength = 300
 
@@ -8,7 +9,10 @@ function ProductForm(props) {
     const [pathToImage, setPathToImage] = useState("")
     const [description, setDescription] = useState("")
     const [shop, setShop] = useState("")
+    const [category, setCategory] = useState("")
 
+    const [shops, setShops] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false)
     const [feedback, setFeedback] = useState("")
 
@@ -20,6 +24,20 @@ function ProductForm(props) {
         }
     }, [productName, pathToImage, shop, description]);
 
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/shops`)
+            .then(response => response.json())
+            .then(data => setShops(data))
+            .catch(error => console.error('Error fetching shops:', error));
+    }, []);
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/product-categories`)
+            .then(response => response.json())
+            .then(data => setCategories(data))
+            .catch(error => console.error('Error fetching categories:', error));
+    }, []);
+
     const onSubmitHandler = event => {
         event.preventDefault()
 
@@ -27,10 +45,9 @@ function ProductForm(props) {
             productName: productName,
             pathToImage: pathToImage,
             description: description,
-            shop: shop
+            shopName: shop,
+            category: category
         }
-
-        console.log(JSON.stringify(newProduct))
 
         fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/products`, {
             method: 'POST',
@@ -41,51 +58,45 @@ function ProductForm(props) {
         }).then(r => r.json())
             .then(json => setFeedback(json))
             .finally(() => {
-                props.onNewProduct(newProduct)
                 setProductName("")
                 setPathToImage("")
                 setDescription("")
                 setShop("")
+                setCategory("")
             })
     }
 
     return (
         <>
             <form onSubmit={onSubmitHandler}>
-                <div style={
-                    {
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px", // Adds spacing between elements
-                        maxWidth: "300px", // Limits the width of the form
-                        margin: "auto", // Centers the form horizontally
-                        padding: "20px", // Adds padding inside the form
-                        border: "1px solid #ccc", // Adds a border around the form
-                        borderRadius: "5px" // Rounds the corners of the form
-                    }
-                }>
-                    <input type="text" value={productName} placeholder="Nazev"
-                           onChange={e => setProductName(e.target.value)}
-                           style={{padding: "10px", fontSize: "16px"}}/>
-                    <input type="text" value={pathToImage} placeholder="Cesta k obrazku"
-                           onChange={e => setPathToImage(e.target.value)}
-                           style={{padding: "10px", fontSize: "16px"}}/>
-                    <input type="text" value={shop} placeholder="Obchod"
-                           onChange={e => setShop(e.target.value)}
-                           style={{padding: "10px", fontSize: "16px"}}/>
-                    <textarea value={description} placeholder="Popis"
+                <div className="form-container">
+                    <input className="input-field" type="text" value={productName} placeholder="Nazev"
+                           onChange={e => setProductName(e.target.value)}/>
+                    <input className="input-field" type="text" value={pathToImage} placeholder="Obrazek"
+                           onChange={e => setPathToImage(e.target.value)}/>
+                    <select className="input-field" value={shop} onChange={e => setShop(e.target.value)}>
+                        <option value="">Vyberte obchod</option>
+                        {shops.map(s => (
+                            <option key={s} value={s}>{s}</option>
+                        ))}
+                    </select>
+                    <select className="input-field" value={category} onChange={e => setCategory(e.target.value)}>
+                        <option value="">Vyberte kategorii</option>
+                        {categories.map(c => (
+                            <option key={c} value={c}>{c}</option>
+                        ))}
+                    </select>
+                    <textarea className="description-field" value={description} placeholder="Popis"
                               onChange={e => setDescription(e.target.value)}
-                              style={{padding: "10px", fontSize: "16px", height: "150px", resize: "none"}}
                               maxLength={maxDescriptionLength}/>
-                    <input type="submit" value="Submit"
-                           style={{padding: "10px", fontSize: "16px", cursor: "pointer"}}
+                    <input className="button" type="submit" value="Submit"
                            disabled={!isFormValid}/>
                 </div>
             </form>
 
             {feedback && <div>{JSON.stringify(feedback)}</div>}
         </>
-    )
+    );
 }
 
 export default ProductForm;

@@ -1,9 +1,12 @@
 package com.example.nnpia_semestralka.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,20 +19,27 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
+    @NotEmpty
     private String productName;
 
-    @Column
+    @Column(nullable = false)
+    @NotEmpty
     private String pathToImage;
 
-    @Column
+    @Column(nullable = false)
+    @NotEmpty
     private String description;
 
-    @Column
-    private String shop;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductCategory category;
 
-    /*@OneToMany(mappedBy = "product")
-    private Set<Review> productReviews;*/
+    @ManyToOne
+    private Shop shop;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> productReviews = Collections.emptySet();
 
     @Override
     public boolean equals(Object o) {
@@ -42,5 +52,14 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, productName);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", category=" + category +
+                '}';
     }
 }

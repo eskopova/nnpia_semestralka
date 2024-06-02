@@ -1,11 +1,13 @@
 package com.example.nnpia_semestralka.Service;
 
 import com.example.nnpia_semestralka.Entity.Product;
-import com.example.nnpia_semestralka.NotFoundException;
+import com.example.nnpia_semestralka.Entity.ProductCategory;
+import com.example.nnpia_semestralka.Exceptions.NotFoundException;
 import com.example.nnpia_semestralka.Repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -16,13 +18,19 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(Integer page, Integer size, String sortBy) {
+        return productRepository.findAll(PageRequest.of(page, size, Sort.Direction.ASC, sortBy));
     }
 
     public Product findById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Produkt nenalezen"));
+    }
+
+    public Page<Product> findByCategory(String categoryName, Integer page, Integer size, String sortBy) {
+        var pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);
+        var productCategory = ProductCategory.valueOf(categoryName);
+        return productRepository.findByCategory(productCategory, pageRequest);
     }
 
     public Product save(Product product) {
@@ -41,8 +49,11 @@ public class ProductServiceImpl implements ProductService {
         if (product.getPathToImage().isBlank()) {
             product.setPathToImage(byId.getPathToImage());
         }
-        if (product.getShop().isBlank()) {
+        if (product.getShop() == null) {
             product.setShop(byId.getShop());
+        }
+        if (product.getCategory() == null) {
+            product.setCategory(byId.getCategory());
         }
         product.setId(id);
 

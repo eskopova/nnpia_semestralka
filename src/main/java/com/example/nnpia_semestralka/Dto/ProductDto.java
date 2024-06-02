@@ -1,6 +1,9 @@
 package com.example.nnpia_semestralka.Dto;
 
+import com.example.nnpia_semestralka.Entity.Shop;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -11,8 +14,11 @@ public class ProductDto {
 
     private String description;
 
-    //private MultipartFile image;
     private String pathToImage;
 
-    private String shop;
+    private String shopName;
+
+    private List<Long> reviewIds;
+
+    private String category;
 }

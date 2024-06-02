@@ -1,0 +1,35 @@
+.login-bar {
+    display: flex;
+    align-items: center;
+}
+
+.logged-in, .logged-out {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.username {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: 1px groove #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.8;
+    background-color: #ccc;
+    color: white;
+}

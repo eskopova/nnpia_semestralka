@@ -1,7 +1,14 @@
 package com.example.nnpia_semestralka.Repository;
 
-import com.example.nnpia_semestralka.Entity.User;
+import com.example.nnpia_semestralka.Entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<AppUser, Long> {
+
+    Optional<AppUser> findAppUserByUsername(String userName);
+
+    Optional<AppUser> findAppUserByEmail(String email);
+
 }

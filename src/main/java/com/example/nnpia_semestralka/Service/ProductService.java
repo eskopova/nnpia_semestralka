@@ -1,18 +1,21 @@
 package com.example.nnpia_semestralka.Service;
 
 import com.example.nnpia_semestralka.Entity.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProductService {
 
-    public List<Product> findAll();
+    Page<Product> findAll(Integer page, Integer size, String sortBy);
 
-    public Product findById(Long id);
+    Product findById(Long id);
 
-    public Product save(Product product);
+    Page<Product> findByCategory(String categoryName, Integer page, Integer size, String sortBy);
 
-    public Product update(Long id, Product product);
+    Product save(Product product);
 
-    public void deleteById(Long id);
+    Product update(Long id, Product product);
+
+    void deleteById(Long id);
 }

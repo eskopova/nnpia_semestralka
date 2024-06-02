@@ -1,0 +1,48 @@
+/* Styles for the SortingOptions component */
+.sorting-container {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.sorting-label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.sorting-select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Styles for the PageSwitch component */
+.paging-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.paging-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #d3d3d3;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.paging-button:disabled {
+    background-color: #ececec;
+    border-color: #ececec;
+    cursor: not-allowed;
+}
+
+.page-number {
+    font-size: 18px;
+    font-weight: bold;
+}

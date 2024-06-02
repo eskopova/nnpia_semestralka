@@ -1,10 +1,11 @@
 package com.example.nnpia_semestralka.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -15,12 +16,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@ManyToOne
-    private User user;
-
-    @ManyToOne
-    private Product product;*/
-
     @Column
     private Integer rating;
 
@@ -29,4 +24,11 @@ public class Review {
 
     @Column
     private Timestamp reviewDate;
+
+    @ManyToOne
+    @JsonIgnore
+    private AppUser user;
+
+    @ManyToOne
+    private Product product;
 }
