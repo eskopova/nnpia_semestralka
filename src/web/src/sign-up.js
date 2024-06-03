@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from './api';
 import './styles/form.css';
 
-function SignUp({ onRegister }) {
+function SignUp({ onLoginStatusChange }) {
+    let navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -27,10 +29,8 @@ function SignUp({ onRegister }) {
                 localStorage.setItem('username', user.username);
                 setSuccess("Registrace proběhla úspěšně!");
 
-                // Call the onRegister callback to notify the parent component
-                if (onRegister) {
-                    onRegister();
-                }
+                onLoginStatusChange(true);
+                navigate("/account");
             } else {
                 setError(response.data.message || "Registrace se nezdařila");
             }

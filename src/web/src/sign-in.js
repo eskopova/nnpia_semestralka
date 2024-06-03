@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from './api';
 import './styles/form.css';
 
-function SignIn({ onLogin }) {
+function SignIn({ onLoginStatusChange }) {
+    let navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -26,10 +28,8 @@ function SignIn({ onLogin }) {
                 localStorage.setItem('username', user.username);
                 setSuccess("Přihlášení proběhlo úspěšně!");
 
-                // Call the onLogin callback to notify the parent component
-                if (onLogin) {
-                    onLogin();
-                }
+                onLoginStatusChange(true);
+                navigate("/account");
             } else {
                 setError(response.data.message || "Přihlášení se nezdařilo");
             }

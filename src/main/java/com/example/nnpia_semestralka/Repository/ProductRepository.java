@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Product findProductByProductNameContains(String contains);
+    Page<Product> findByProductNameContains(String contains, PageRequest pageRequest);
 
     Page<Product> findByCategory(ProductCategory category, PageRequest pageRequest);
 

@@ -28,36 +28,36 @@ function App() {
         setLoginStatus(status);
     };
 
-  return (
-    <Router>
-        <div className="app">
+    return (
+        <Router>
+            <div className="app">
+                <div className="navigation">
+                    <Nav onLoginStatusChange={handleLoginStatusChange} />
+                </div>
 
-            <div className="navigation"><Nav onLoginStatusChange={handleLoginStatusChange}/></div>
+                <Routes>
+                    <Route path="/product-form" element={<ProductForm />} />
+                    <Route path="/shop-form" element={<ShopForm />} />
 
-            <Routes>
-                <Route path="/product-form" element={<ProductForm />}/>
-                <Route path="/shop-form" element={<ShopForm />}/>
+                    <Route path="/" element={<Home />} />
 
-                <Route path="/" element={<Home/>}/>
+                    <Route path="/products" element={<AllProducts />} />
+                    <Route path="/products/:id" element={<ProductPage />} />
+                    <Route path="/by-store" element={<ByStore />} />
+                    <Route path="/by-store/:name" element={<ShopProducts />} />
+                    <Route path="/by-category" element={<ByCategory />} />
+                    <Route path="/by-category/:name" element={<CategoryProducts />} />
 
-                <Route path="/products" element={<AllProducts/>}/>
-                <Route path="/products/:id" element={<ProductPage/>}/>
-                <Route path="/by-store" element={<ByStore />} />
-                <Route path="/by-store/:name" element={<ShopProducts />} />
-                <Route path="/by-category" element={<ByCategory />} />
-                <Route path="/by-category/:name" element={<CategoryProducts />} />
+                    <Route path="/sign-up" element={<SignUp onLoginStatusChange={handleLoginStatusChange} />} />
+                    <Route path="/sign-in" element={<SignIn onLoginStatusChange={handleLoginStatusChange} />} />
+                    <Route path="/account" element={<AccountPage />} />
 
-                <Route path="/sign-up" element={<SignUp onLogin={handleLoginStatusChange}/>}/>
-                <Route path="/sign-in" element={<SignIn onLogin={handleLoginStatusChange}/>}/>
-                <Route path="/account" element={<AccountPage/>}/>
-
-                <Route path="/add-review/:id" element={<ReviewForm/>}/>
-                <Route path="/search/:text" element={<SearchProductsList/>}/>
-            </Routes>
-
-        </div>
-    </Router>
-  );
+                    <Route path="/add-review/:id" element={<ReviewForm />} />
+                    <Route path="/search/:text" element={<SearchProductsList />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

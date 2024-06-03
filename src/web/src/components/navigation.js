@@ -4,13 +4,13 @@ import LoginBar from './login-bar.js';
 import SearchBar from './search-bar.js';
 import '../styles/navigation.css';
 
-function Nav(props) {
+function Nav({ onLoginStatusChange }) {
     return (
         <nav className="nav-container">
             <div className="nav-top">
                 <div className="nav-top-left"><a href="/" className="home-link"><h3>TopPečivo</h3></a></div>
-                <div className="nav-top-mid"><SearchBar/></div>
-                <div className="nav-top-right"><LoginBar onLoginStatusChange={props.onLoginStatusChange}/></div>
+                <div className="nav-top-mid"><SearchBar /></div>
+                <div className="nav-top-right"><LoginBar onLoginStatusChange={onLoginStatusChange} /></div>
             </div>
             <div id="navigation" className="nav-links">
                 <ul>

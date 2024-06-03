@@ -33,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByCategory(productCategory, pageRequest);
     }
 
+    public Page<Product> findBySubstring(String substring, Integer page, Integer size, String sortBy) {
+        var pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);
+        return productRepository.findByProductNameContains(substring, pageRequest);
+    }
+
     public Product save(Product product) {
         return productRepository.save(product);
     }

@@ -13,6 +13,8 @@ public interface ProductService {
 
     Page<Product> findByCategory(String categoryName, Integer page, Integer size, String sortBy);
 
+    Page<Product> findBySubstring(String substring, Integer page, Integer size, String sortBy);
+
     Product save(Product product);
 
     Product update(Long id, Product product);

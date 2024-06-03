@@ -66,6 +66,18 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/text-search/{substring}")
+    public List<ProductDto> getProductsBySubstring(
+            @PathVariable String substring,
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "4") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy) {
+        return productService.findBySubstring(substring, pageNumber, pageSize, sortBy)
+                .stream()
+                .map(conversionService::toProductDto)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("")
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
         Product product = conversionService.toProduct(productDto);
