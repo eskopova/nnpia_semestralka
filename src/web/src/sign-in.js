@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import './styles/form.css'; // Import the CSS file
+import api from './api';
+import './styles/form.css';
 
-function SignIn() {
+function SignIn({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -15,19 +16,22 @@ function SignIn() {
         const loginData = { username, password };
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(loginData),
-            });
+            const response = await api.post('/auth/login', loginData);
 
-            if (response.ok) {
+            if (response.status === 200) {
+                const { token, user } = response.data;
+
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userId', user.id);
+                localStorage.setItem('username', user.username);
                 setSuccess("Přihlášení proběhlo úspěšně!");
+
+                // Call the onLogin callback to notify the parent component
+                if (onLogin) {
+                    onLogin();
+                }
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || "Přihlášení se nezdařilo");
+                setError(response.data.message || "Přihlášení se nezdařilo");
             }
         } catch (err) {
             setError("Nastala chyba: " + err.message);

@@ -38,7 +38,7 @@ public class Product {
     @ManyToOne
     private Shop shop;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Review> productReviews = Collections.emptySet();
 
     @Override

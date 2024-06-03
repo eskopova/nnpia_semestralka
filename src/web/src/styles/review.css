@@ -1,0 +1,42 @@
+.review-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-rating {
+    font-weight: bold;
+    padding: 5px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #777;
+}
+
+.review-body {
+    margin-bottom: 10px;
+}
+
+.review-comment {
+    font-size: 14px;
+}
+
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+}
+
+.review-user, .review-product {
+    font-weight: bold;
+}

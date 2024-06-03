@@ -1,6 +1,8 @@
 package com.example.nnpia_semestralka.Configuration;
 
 import com.example.nnpia_semestralka.Service.CustomUserDetailsService;
+import com.example.nnpia_semestralka.Service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +22,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@AllArgsConstructor
 public class ApplicationConfiguration implements WebMvcConfigurer {
+
+    private final UserService userService;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -47,7 +52,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
+        return new CustomUserDetailsService(userService);
     }
 
     @Bean

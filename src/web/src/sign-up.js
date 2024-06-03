@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import './styles/form.css'; // Import the CSS file
+import api from './api';
+import './styles/form.css';
 
-function SignUp() {
+function SignUp({ onRegister }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -16,19 +17,22 @@ function SignUp() {
         const userData = { username, password, email };
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/auth/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userData),
-            });
+            const response = await api.post('/auth/register', userData);
 
-            if (response.ok) {
+            if (response.status === 200) {
+                const { token, user } = response.data;
+
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userId', user.id);
+                localStorage.setItem('username', user.username);
                 setSuccess("Registrace proběhla úspěšně!");
+
+                // Call the onRegister callback to notify the parent component
+                if (onRegister) {
+                    onRegister();
+                }
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || "Registrace se nezdařila");
+                setError(response.data.message || "Registrace se nezdařila");
             }
         } catch (err) {
             setError("Nastala chyba: " + err.message);
@@ -72,7 +76,7 @@ function SignUp() {
                 <button
                     className="button"
                     type="submit">
-                    Register
+                    Registrace
                 </button>
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 {success && <p style={{ color: "green" }}>{success}</p>}

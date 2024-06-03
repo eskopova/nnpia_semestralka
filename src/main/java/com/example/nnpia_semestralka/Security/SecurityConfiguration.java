@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.GET, "/products/**", "/shops/**", "/reviews/**", "/product-categories").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/**", "/shops/**", "/reviews/**", "/product-categories", "/users/username/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/reviews/**").authenticated()

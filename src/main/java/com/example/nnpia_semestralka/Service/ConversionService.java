@@ -77,12 +77,15 @@ public class ConversionService {
         product.setShop(shopRepository.findShopByShopName(productDto.getShopName())
                 .orElseThrow(() -> new NotFoundException("Obchod nenalezen")));
         product.setCategory(toCategory(productDto.getCategory()));
-        product.setProductReviews(
-                productDto.getReviewIds()
-                        .stream()
-                        .map(id -> reviewRepository.findById(id)
-                                .orElseThrow(() -> new NotFoundException("Recenze nenalezena")))
-                        .collect(Collectors.toSet()));
+
+        if (productDto.getReviewIds() != null) {
+            product.setProductReviews(
+                    productDto.getReviewIds()
+                            .stream()
+                            .map(id -> reviewRepository.findById(id)
+                                    .orElseThrow(() -> new NotFoundException("Recenze nenalezena")))
+                            .collect(Collectors.toSet()));
+        }
 
         return product;
     }
@@ -104,10 +107,12 @@ public class ConversionService {
 
         shop.setId(shopDto.getId());
         shop.setShopName(shopDto.getShopName());
-        shop.setProducts(shopDto.getProducts()
-                .stream()
-                .map(this::toProduct)
-                .toList());
+        if (shopDto.getProducts() != null) {
+            shop.setProducts(shopDto.getProducts()
+                    .stream()
+                    .map(this::toProduct)
+                    .toList());
+        }
         return shop;
     }
 

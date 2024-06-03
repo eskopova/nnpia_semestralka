@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login-bar.css';
 
-function LoginBar() {
+function LoginBar({ onLoginStatusChange }) {
     let navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState(false);
@@ -10,8 +10,8 @@ function LoginBar() {
 
     useEffect(() => {
         try {
-            const user = localStorage['username'];
-            if (user != null) {
+            const user = localStorage.getItem('username');
+            if (user) {
                 setLoggedIn(true);
                 setUsername(user);
             } else {
@@ -22,7 +22,11 @@ function LoginBar() {
             setLoggedIn(false);
             setUsername("");
         }
-    }, []);
+
+        if (onLoginStatusChange) {
+            onLoginStatusChange(loggedIn);
+        }
+    }, [loggedIn, onLoginStatusChange]);
 
     const handleLogout = () => {
         try {
@@ -49,21 +53,21 @@ function LoginBar() {
     return (
         <div className="login-bar">
             {loggedIn ? (
-                <div id="logged-in">
+                <div className="logged-in">
                     <div className="user-info">
-                        <p id="username">{username}</p>
-                        <button id="account" onClick={handleAccount}>Účet</button>
+                        <p className="username">Přihlášen: {username}</p>
                     </div>
-                    <button id="logout" onClick={handleLogout}>Odhlásit</button>
+                    <button className="account" onClick={handleAccount}>Účet</button>
+                    <button className="logout" onClick={handleLogout}>Odhlásit</button>
                 </div>
             ) : (
-                <div id="logged-out">
-                    <button id="sign-up" onClick={handleSignUp}>Registrace</button>
-                    <button id="sign-in" onClick={handleSignIn}>Přihlášení</button>
+                <div className="logged-out">
+                <button className="sign-up" onClick={handleSignUp}>Registrace</button>
+                    <button className="sign-in" onClick={handleSignIn}>Přihlášení</button>
                 </div>
             )}
         </div>
     );
 }
 
-export default LoginBar
+export default LoginBar;

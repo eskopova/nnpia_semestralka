@@ -1,41 +1,40 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import api from './api';
 import './styles/form.css';
 
 function ReviewForm() {
+    let navigate = useNavigate();
     const { id } = useParams(); // Get the product ID from the URL parameters
     const [rating, setRating] = useState(10);
     const [comment, setComment] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
+    const userId = localStorage.getItem('userId')
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError(null);
         setSuccess(null);
 
+        console.log(userId)
+
         const reviewData = {
             rating,
             comment,
             productId: id,
+            userId: userId,
         };
 
-        console.log(JSON.stringify(reviewData))
-
         try {
-            const response = await fetch(`${process.env.REACT_APP_TARGET_DOMAIN}/reviews`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(reviewData),
-            });
+            const response = await api.post('/reviews', reviewData);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 setSuccess("Recenze byla úspěšně přidána!");
+                navigate(`/products/${id}`)
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || "Přidání recenze se nezdařilo");
+                setError(response.data.message || "Přidání recenze se nezdařilo");
             }
         } catch (err) {
             setError("Nastala chyba: " + err.message);

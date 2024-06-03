@@ -46,6 +46,12 @@ public class UserController {
         return conversionService.toAppUserDto(user);
     }
 
+    @GetMapping("/username/{id}")
+    public String getUserName(@PathVariable Long id) {
+        AppUser user = userService.findById(id);
+        return user.getUsername();
+    }
+
     @PostMapping("")
     public AppUserDto createUser(@RequestBody AppUserDto userDto) {
         AppUser user = conversionService.toAppUser(userDto);
