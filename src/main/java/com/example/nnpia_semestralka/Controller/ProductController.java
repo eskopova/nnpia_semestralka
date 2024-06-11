@@ -2,9 +2,12 @@ package com.example.nnpia_semestralka.Controller;
 
 import com.example.nnpia_semestralka.Dto.ProductDto;
 import com.example.nnpia_semestralka.Entity.Product;
+import com.example.nnpia_semestralka.Exceptions.NotFoundException;
 import com.example.nnpia_semestralka.Service.ConversionService;
 import com.example.nnpia_semestralka.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,15 +29,10 @@ public class ProductController {
         this.conversionService = conversionService;
     }
 
-    /*@ExceptionHandler(RuntimeException.class)
-    public String handleException() {
-        return "error";
-    }
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFound(NotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }*/
+    }
 
     @GetMapping("")
     public List<ProductDto> getAllProducts(

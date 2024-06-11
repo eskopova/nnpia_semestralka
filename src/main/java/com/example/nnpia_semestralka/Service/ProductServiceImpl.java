@@ -68,4 +68,21 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
+
+    public double getProductRating(Long id) {
+        Product byId = findById(id);
+        double reviewsCount = 0;
+        double reviewsRatingSum = 0;
+
+        for (var review : byId.getProductReviews()) {
+            reviewsCount++;
+            reviewsRatingSum += review.getRating();
+        }
+
+        if (reviewsCount == 0) {
+            return 0;
+        }
+
+        return reviewsRatingSum / reviewsCount;
+    }
 }
